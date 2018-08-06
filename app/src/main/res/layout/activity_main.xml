@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/textEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="0123456789bcdefghjkmnpqrstuvwxyz"
+            android:lines="1"
+            android:maxLength="12"
+            android:maxLines="1"
+            android:text="v12n8trdn" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textInc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Inc:" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textDec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="dec:" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="N:" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="S:" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textW"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="W:" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="E:" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textChilds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="childs:" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textParent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="parent:" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Location:" />
+
+    </LinearLayout>
+</ScrollView>
