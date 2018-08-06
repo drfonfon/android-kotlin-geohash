@@ -3,6 +3,24 @@
 An implementation of Geohashes in Android.
 The produced hashes, when using character precision (multiples of 5 bits) are compatible to the reference implementation geohash.org.
 
+###### Include gradle dependency
+
+Add it in your root build.gradle at the end of repositories:
+
+```
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+Add the dependency:
+
+```
+implementation 'com.github.drfonfon:android-kotlin-geohash:1.0'
+```
+
 ## Creation examples
 ```kotlin
     val location = Location("geohash");
