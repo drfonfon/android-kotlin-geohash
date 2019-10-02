@@ -3,7 +3,7 @@
 An implementation of Geohashes in Android.
 The produced hashes, when using character precision (multiples of 5 bits) are compatible to the reference implementation geohash.org.
 
-###### Include gradle dependency
+## Include gradle dependency
 
 Add it in your root build.gradle at the end of repositories:
 
@@ -15,6 +15,7 @@ allprojects {
 	}
 }
 ```
+
 Add the dependency:
 
 ```
@@ -24,6 +25,7 @@ dependencies {
 ```
 
 ## Creation examples
+
 ```kotlin
     val location = Location("geohash");
     location.latitude = 53.2030476;
@@ -46,7 +48,8 @@ dependencies {
     location.toGeoHash(8)//"v12n8trd"
 ```
 
-## metods
+## Methods
+
 ```kotlin
     val location = Location("geohash");
     location.latitude = 53.2030476;
@@ -86,4 +89,3 @@ dependencies {
 
     hash.westernNeighbour //"v12n8trdh"
 ```
-
