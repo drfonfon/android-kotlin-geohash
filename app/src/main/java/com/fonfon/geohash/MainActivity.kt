@@ -1,62 +1,89 @@
 package com.fonfon.geohash
 
-import android.annotation.SuppressLint
-import android.location.Location
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import com.fonfon.geohash.R.id.*
-import com.fonfon.kgeohash.GeoHash
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.fonfon.kgeohash.toGeoHash
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
-
-    textEdit.addTextChangedListener(object : TextWatcher {
-      override fun afterTextChanged(p0: Editable?) {
-
-      }
-
-      override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-      }
-
-      @SuppressLint("SetTextI18n")
-      override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        p0?.let {
-          val geoHash = it.toString().toGeoHash()
-          textInc.text = "Inc: ${geoHash.inc()}"
-          textDec.text = "Dec: ${geoHash.dec()}"
-          textN.text = "Northern Neighbour: ${geoHash.northernNeighbour}"
-          textS.text = "Southern Neighbour: ${geoHash.southernNeighbour}"
-          textW.text = "Western Neighbour: ${geoHash.westernNeighbour}"
-          textE.text = "Eastern Neighbour: ${geoHash.easternNeighbour}"
-          val childs = geoHash.childs()
-          if (childs != null) {
-            textChilds.text = "Childs: {"
-            childs.forEach {
-              textChilds.text = textChilds.text.toString() + " " + it.toString()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    GeoHashScreen()
+                }
             }
-            textChilds.text = textChilds.text.toString() + "}"
-          } else {
-            textChilds.text = "Childs: []"
-          }
-          val parent = geoHash.parent()
-          if(parent != null) {
-            textParent.text = "Parent: $parent"
-          } else {
-            textParent.text = "Parent: -"
-          }
-          textLocation.text = "Location: ${geoHash.toLocation()}"
         }
-      }
-    })
+    }
+}
 
-    textEdit.setText("v12n8trdh")
-  }
+@Composable
+fun GeoHashScreen() {
+    var text by remember { mutableStateOf("v12n8trdh") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        OutlinedTextField(
+            value = text,
+            onValueChange = { newValue ->
+                if (newValue.all { it in "0123456789bcdefghjkmnpqrstuvwxyz" } && newValue.length <= 12) {
+                    text = newValue
+                }
+            },
+            label = { Text("GeoHash") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
+
+        if (text.isNotEmpty()) {
+            val geoHash = remember(text) { text.toGeoHash() }
+
+            Text("Inc: ${geoHash.inc()}")
+            Text("Dec: ${geoHash.dec()}")
+            Text("Northern Neighbour: ${geoHash.northernNeighbour}")
+            Text("Southern Neighbour: ${geoHash.southernNeighbour}")
+            Text("Western Neighbour: ${geoHash.westernNeighbour}")
+            Text("Eastern Neighbour: ${geoHash.easternNeighbour}")
+
+            val childs = geoHash.childs()
+            if (childs != null) {
+                Text("Childs: { ${childs.joinToString(" ")} }")
+            } else {
+                Text("Childs: []")
+            }
+
+            val parent = geoHash.parent()
+            Text("Parent: ${parent ?: "-"}")
+
+            Text("Location: ${geoHash.location}")
+        }
+    }
 }

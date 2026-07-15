@@ -1,29 +1,59 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
-android {
-    compileSdkVersion 28
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.multiplatform)
+}
 
-    defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+kotlin {
+    androidTarget {}
+    jvm()
+
+    iosArm64()
+    iosSimulatorArm64()
+    iosX64()
+
+    sourceSets {
+        commonMain {}
+        commonTest {
+            dependencies {
+                implementation kotlin("test")
+            }
+        }
+        androidMain {}
+        androidUnitTest {}
+        jvmMain {}
+        jvmTest {}
+        iosMain {
+            dependsOn commonMain
+        }
+        iosArm64Main.dependsOn iosMain
+        iosSimulatorArm64Main.dependsOn iosMain
+        iosX64Main.dependsOn iosMain
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    targets.withType(KotlinNativeTarget.class).tap {
+        configureEach {
+            binaries.framework {
+                baseName = "kgeohash"
+                isStatic = true
+            }
         }
     }
 }
 
-dependencies {
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+android {
+    namespace "com.fonfon.kgeohash"
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 1
+        }
+    }
+    defaultConfig {
+        minSdk 23
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
 }
